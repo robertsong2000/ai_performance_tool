@@ -1,0 +1,39 @@
+{
+  "default_settings": {
+    "server_url": "http://localhost:1234",
+    "model_name": "qwen/qwen3-1.7b",
+    "timeout": 60,
+    "max_tokens": 100,
+    "temperature": 0.7
+  },
+  "test_configurations": {
+    "quick_test": {
+      "test_type": "single",
+      "max_tokens": 50,
+      "description": "快速单次测试"
+    },
+    "standard_test": {
+      "test_type": "batch",
+      "max_tokens": 100,
+      "description": "标准批量测试"
+    },
+    "performance_test": {
+      "test_type": "concurrent",
+      "concurrent_count": 5,
+      "max_tokens": 150,
+      "description": "性能并发测试"
+    },
+    "stress_test": {
+      "test_type": "stress",
+      "duration_seconds": 60,
+      "max_tokens": 50,
+      "description": "压力测试"
+    }
+  },
+  "visualization_settings": {
+    "chart_style": "default",
+    "figure_size": [12, 8],
+    "dpi": 300,
+    "save_format": "png"
+  }
+}
