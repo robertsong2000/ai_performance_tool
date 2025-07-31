@@ -115,6 +115,8 @@ def main():
                        help="指定模型名称 (可选)")
     parser.add_argument("--test-type", choices=["single", "batch", "concurrent", "stress", "comprehensive"], 
                        default="comprehensive", help="测试类型 (默认: comprehensive)")
+    parser.add_argument("--list", action="store_true",
+                       help="列出所有可用模型")
     
     args = parser.parse_args()
     
@@ -128,6 +130,17 @@ def main():
     
     # 创建测试器实例
     tester = LMStudioPerformanceTester(base_url=args.url, model_name=args.model)
+    
+    # 如果使用了--list选项，则只列出模型并退出
+    if args.list:
+        models = tester.get_available_models()
+        if models:
+            print("\n📋 可用模型列表:")
+            for i, model in enumerate(models, 1):
+                print(f"   {i}. {model}")
+        else:
+            print("\n❌ 无法获取模型列表，请确保LM Studio服务器正在运行且已加载模型。")
+        sys.exit(0)
     
     # 检查服务器状态
     if not tester.check_server_status():

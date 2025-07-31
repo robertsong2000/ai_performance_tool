@@ -60,6 +60,25 @@ class LMStudioPerformanceTester:
             print(f"❌ 无法连接到LM Studio服务器: {e}")
             return False
     
+    def get_available_models(self) -> List[str]:
+        """
+        获取可用模型列表
+        
+        Returns:
+            List[str]: 模型名称列表
+        """
+        try:
+            response = self.session.get(f"{self.base_url}/v1/models", timeout=5)
+            if response.status_code == 200:
+                models = response.json()
+                return [model['id'] for model in models.get('data', [])]
+            else:
+                print(f"❌ 服务器响应错误: {response.status_code}")
+                return []
+        except requests.exceptions.RequestException as e:
+            print(f"❌ 无法连接到LM Studio服务器: {e}")
+            return []
+    
     def get_system_metrics(self) -> tuple:
         """
         获取系统资源使用情况
